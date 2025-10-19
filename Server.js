@@ -56,8 +56,9 @@ const userSchema = new mongoose.Schema({
   fullName: { type: String, default: "" },
   city: { type: String, default: "" },
   location: { type: String, default: "" },
-});
+}, { autoIndex: true }); // ensures unique index is created
 const User = mongoose.model("User", userSchema);
+
 
 const cartSchema = new mongoose.Schema({
   userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
