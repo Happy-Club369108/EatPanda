@@ -56,7 +56,7 @@ const userSchema = new mongoose.Schema({
   fullName: { type: String, default: "" },
   city: { type: String, default: "" },
   location: { type: String, default: "" },
-}, { autoIndex: true }); // ensures unique index is created
+}, { autoIndex: true }); 
 const User = mongoose.model("User", userSchema);
 
 
