@@ -83,6 +83,12 @@ const orderSchema = new mongoose.Schema({
 });
 const Order = mongoose.model("Order", orderSchema);
 
+const categorySchema = new mongoose.Schema({
+  name: { type: String, required: true, unique: true }
+});
+const Category = mongoose.model("Category", categorySchema);
+
+
 // ====== USER ROUTES ======
 
 // Get user profile
@@ -150,6 +156,34 @@ app.post("/login", async (req, res) => {
 });
 
 // ====== PRODUCT ROUTES ======
+
+app.post("/category/upload", async (req, res) => {
+  try {
+    const { name } = req.body;
+    if (!name) return res.status(400).json({ message: "Name is required." });
+
+    const existing = await Category.findOne({ name });
+    if (existing) return res.status(409).json({ message: "Category already exists" });
+
+    const newCategory = new Category({ name });
+    await newCategory.save();
+    res.status(201).json({ message: "Category uploaded", category: newCategory });
+  } catch (err) {
+    console.error("Category Upload Error:", err);
+    res.status(500).json({ message: "Server Error", error: err.message });
+  }
+});
+
+app.get("/categories", async (req, res) => {
+  try {
+    const categories = await Category.find().sort({ name: 1 });
+    res.json(categories);
+  } catch (err) {
+    console.error("Fetch Categories Error:", err);
+    res.status(500).json({ message: "Server Error", error: err.message });
+  }
+});
+
 
 // Upload product
 app.post("/upload", parser.single("image"), async (req, res) => {
