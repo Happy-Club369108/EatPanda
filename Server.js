@@ -51,12 +51,12 @@ const productSchema = new mongoose.Schema({
 const Product = mongoose.model("Product", productSchema);
 
 const userSchema = new mongoose.Schema({
-  phoneNumber: { type: String, required: true, unique: true },
+  phoneNumber: { type: String, required: true },
   password: { type: String, required: true },
   fullName: { type: String, default: "" },
   city: { type: String, default: "" },
   location: { type: String, default: "" },
-}, { autoIndex: true }); 
+}); 
 const User = mongoose.model("User", userSchema);
 
 
