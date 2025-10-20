@@ -167,6 +167,7 @@ app.post("/upload", parser.single("image"), async (req, res) => {
   }
 });
 
+
 // Get all products
 app.get("/products", async (req, res) => {
   try {
